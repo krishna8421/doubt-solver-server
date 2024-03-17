@@ -4,6 +4,7 @@ import { connectDB, disconnectDB } from "./db/index.js";
 import authRoutes from "./routes/auth.routes.js";
 import doubtRoutes from "./routes/doubt.routes.js";
 import userRoutes from "./routes/user.routes.js";
+import subjectRoutes from "./routes/subject.routes.js";
 import verifyToken from "./middlewares/verifyToken.js";
 
 const app = express();
@@ -15,8 +16,9 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/doubt", verifyToken, doubtRoutes);
 app.use("/api/user", verifyToken, userRoutes);
+app.use("/api/subject", subjectRoutes);
 
-app.get("/", (req, res) => {
+app.get("/", (_req, res) => {
   res.json({ message: "Welcome to Doubt Solver API." });
 });
 

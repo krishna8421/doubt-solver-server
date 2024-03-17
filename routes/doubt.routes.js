@@ -1,5 +1,11 @@
 import express from "express";
-import { askDoubt, getSolversList } from "../controllers/doubt.controller.js";
+import {
+  askDoubt,
+  getDoubt,
+  getAllDoubts,
+  getSolversList,
+  acceptDoubtRequest,
+} from "../controllers/doubt.controller.js";
 
 const router = express.Router();
 
@@ -16,7 +22,7 @@ router.post("/ask", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/all", async (req, res) => {
   try {
     const data = await getAllDoubts(req.userId);
 
@@ -58,16 +64,16 @@ router.post("/solvers-list", async (req, res) => {
 });
 
 router.post("/accept-request", async (req, res) => {
-    try {
-        const { doubtId } = req.body;
-    
-        const data = await acceptRequest(req.userId ,doubtId);
-    
-        res.status(200).send(data);
-    } catch (error) {
-        console.log({ error });
-        res.status(500).send({ message: error.message, status: false });
-    }
-})
+  try {
+    const { doubtId } = req.body;
+
+    const data = await acceptDoubtRequest(req.userId, doubtId);
+
+    res.status(200).send(data);
+  } catch (error) {
+    console.log({ error });
+    res.status(500).send({ message: error.message, status: false });
+  }
+});
 
 export default router;
